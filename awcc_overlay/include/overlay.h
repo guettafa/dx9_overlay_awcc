@@ -9,9 +9,21 @@ class Overlay
 {
 	private:
 		HWND mHandle;
-		int  mDisplayDimensions[2]; // Width + Height
+		UINT32  mDisplayDimension[2]; // Width & Height
 
 	public:
+		Overlay(
+			std::string_view className, 
+			std::string_view windowName,
+			UINT64 styles
+		)
+		{
+			if (!GetWndHandle(className, windowName)) return;
+			if (!GetDisplayDimensions())			  return;
+			if (!ShowWnd())							  return;
+			if (!ChangeWndStyle(styles))			  return;
+		}
+
 		bool GetWndHandle(std::string_view className, std::string_view windowName);
 		bool GetDisplayDimensions();
 		bool ShowWnd();

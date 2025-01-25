@@ -1,6 +1,6 @@
 #include "overlay.h"
 
-#define ERROR_MSG(message) std::printf("ERROR - %s \n", message);
+#define ERROR_MSG(message) std::cout << "ERROR - " << message << std::endl;
 
 bool Overlay::GetWndHandle(std::string_view className, std::string_view windowName)
 {
@@ -11,6 +11,8 @@ bool Overlay::GetWndHandle(std::string_view className, std::string_view windowNa
 		ERROR_MSG("Can't get window handle");
 		return false;
 	}
+	std::printf("Handle : 0x%11x \n", mHandle);
+
 	return true;
 }
 
@@ -26,8 +28,8 @@ bool Overlay::GetDisplayDimensions()
 	}
 	std::printf("Width : %i - Height : %i\n", displayW, displayH);
 
-	mDisplayDimensions[0] = displayW;
-	mDisplayDimensions[1] = displayH;
+	mDisplayDimension[0] = displayW;
+	mDisplayDimension[1] = displayH;
 
 	return true;
 }
@@ -63,13 +65,19 @@ bool Overlay::ChangeWndStyle(UINT64 styles)
 		ERROR_MSG("Can't change Window Opacity");
 		return false;
 	}
+	std::printf("Window Styles has been changed ! \n");
 
 	return true;
 }
 
 bool Overlay::ChangeWndPosition()
 {
-	bool state = SetWindowPos(mHandle, NULL, 0, 0, mDisplayDimensions[0], mDisplayDimensions[1], SWP_NOREDRAW);								 
+	if (!SetWindowPos(mHandle, NULL, 0, 0, mDisplayDimension[0], mDisplayDimension[1], SWP_NOREDRAW))
+	{
+		ERROR_MSG("Can't change Scale and Position");
+		return false;
+	}
+	std::printf("Window Position has been changed ! \n");
 
 	return true;
 }
