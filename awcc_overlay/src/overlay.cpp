@@ -1,12 +1,12 @@
 #include "overlay.h"
 
-#define ERROR_MSG(message)  std::cout << "ERROR - " << message << std::endl;
+#define ERROR_MSG(message) std::printf("ERROR - %s \n", message);
 
 bool Overlay::GetWndHandle(std::string_view className, std::string_view windowName)
 {
-	this->m_handle = FindWindowA(className.data(), windowName.data());
+	mHandle = FindWindowA(className.data(), windowName.data());
 
-	if (m_handle == NULL)
+	if (mHandle == NULL)
 	{
 		ERROR_MSG("Can't get window handle");
 		return false;
@@ -16,31 +16,60 @@ bool Overlay::GetWndHandle(std::string_view className, std::string_view windowNa
 
 bool Overlay::GetDisplayDimensions()
 {
-	this->m_displayDimensions[0] = GetSystemMetrics(SM_CXSCREEN); // Width
-	this->m_displayDimensions[1] = GetSystemMetrics(SM_CYSCREEN); // Height
+	int displayW = GetSystemMetrics(SM_CXSCREEN); // Width
+	int displayH = GetSystemMetrics(SM_CYSCREEN); // Height
 
-	if (!m_displayDimensions[0] || !m_displayDimensions[1])
+	if (!displayW || !displayH)
 	{
 		ERROR_MSG("Can't get display width and height");
+		return false;
+	}
+	std::printf("Width : %i - Height : %i\n", displayW, displayH);
+
+	mDisplayDimensions[0] = displayW;
+	mDisplayDimensions[1] = displayH;
+
+	return true;
+}
+
+bool Overlay::ShowWnd()
+{
+	ShowWindow(mHandle, SW_SHOW);
+	
+	MARGINS margins{ -1 }; // -1 for Sheet of glass effect AKA no borders
+	HRESULT hr = S_OK;
+
+	hr = DwmExtendFrameIntoClientArea(mHandle, &margins);
+	if (FAILED(hr))
+	{
+		ERROR_MSG("Can't extend frame into client area");
 		return false;
 	}
 	return true;
 }
 
-
-bool Overlay::ShowWnd()
+bool Overlay::ChangeWndStyle(UINT64 styles)
 {
+	// Change Window Extended Styles
+	if (!SetWindowLongA(mHandle, GWL_EXSTYLE, styles)) // 0 if failed
+	{
+		ERROR_MSG("Can't set styles to window");
+		return false;
+	}
 
-}
+	// Change Window Opacity AKA Alpha value
+	if (!SetLayeredWindowAttributes(mHandle, 0, 255, LWA_ALPHA))
+	{
+		ERROR_MSG("Can't change Window Opacity");
+		return false;
+	}
 
-bool Overlay::ChangeWndOpacity()
-{
-}
-
-bool Overlay::ChangeWndStyle()
-{
+	return true;
 }
 
 bool Overlay::ChangeWndPosition()
 {
+	bool state = SetWindowPos(mHandle, NULL, 0, 0, mDisplayDimensions[0], mDisplayDimensions[1], SWP_NOREDRAW);								 
+
+	return true;
 }
