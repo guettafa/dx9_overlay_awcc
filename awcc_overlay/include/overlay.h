@@ -22,6 +22,7 @@ class Overlay
 			if (!GetDisplayDimensions())			  return;
 			if (!ShowWnd())							  return;
 			if (!ChangeWndStyle(styles))			  return;
+			if (!ChangeWndPosition())				  return;
 		}
 
 		bool GetWndHandle(std::string_view className, std::string_view windowName);

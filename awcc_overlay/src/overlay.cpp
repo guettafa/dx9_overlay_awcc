@@ -26,10 +26,11 @@ bool Overlay::GetDisplayDimensions()
 		ERROR_MSG("Can't get display width and height");
 		return false;
 	}
-	std::printf("Width : %i - Height : %i\n", displayW, displayH);
 
 	mDisplayDimension[0] = displayW;
 	mDisplayDimension[1] = displayH;
+
+	std::printf("Width : %i - Height : %i\n", mDisplayDimension[0], mDisplayDimension[1]);
 
 	return true;
 }
