@@ -85,6 +85,10 @@ void Render::Loop(const std::function<void()>& func)
 {
 	bool over = false;
 	MSG msg{};
+
+	// ImGui Default bg Color
+	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
 	while (!over)
 	{
 		// Polls Events
@@ -96,6 +100,8 @@ void Render::Loop(const std::function<void()>& func)
 			if (msg.message == WM_QUIT) 
 				over = true;
 		}
+
+		ImGui_ImplDX9_NewFrame();
 		
 		// So the ImGui Window can be interactable
 		POINT p;
@@ -107,13 +113,26 @@ void Render::Loop(const std::function<void()>& func)
 		io.MouseDown[0] = (GetKeyState(VK_LBUTTON) & 0x8000) != 0;
 		io.MouseDown[1] = (GetKeyState(VK_RBUTTON) & 0x8000) != 0;
 
-		ImGui_ImplDX9_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
 
-		func;
+		func();
 
 		ImGui::EndFrame();
+
+		mDeviceD3d9->SetRenderState(D3DRS_ZENABLE,		     FALSE);
+		mDeviceD3d9->SetRenderState(D3DRS_ALPHABLENDENABLE,  FALSE);
+		mDeviceD3d9->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
+
+		D3DCOLOR clear_col_dx = D3DCOLOR_RGBA((int)(clear_color.x * clear_color.w * 255.0f), (int)(clear_color.y * clear_color.w * 255.0f), (int)(clear_color.z * clear_color.w * 255.0f), (int)(clear_color.w * 255.0f));
+		mDeviceD3d9->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, clear_col_dx, 1.0f, 0);
+		if (mDeviceD3d9->BeginScene() >= 0)
+		{
+			ImGui::Render();
+			ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
+			mDeviceD3d9->EndScene();
+		}
+		HRESULT res = mDeviceD3d9->Present(nullptr, nullptr, nullptr, nullptr);
 	}
 
 	ImGui_ImplDX9_Shutdown();
