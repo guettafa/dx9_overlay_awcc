@@ -5,7 +5,7 @@
 #include <dwmapi.h>
 #include <string_view>
 
-#define ERROR_MSG(message) std::cout << "ERROR - " << message << std::endl;
+#define LOG(message) std::cout << "INFO - " << message << std::endl;
 
 class Overlay
 {

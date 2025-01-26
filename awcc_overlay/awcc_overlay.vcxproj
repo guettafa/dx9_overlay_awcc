@@ -150,6 +150,7 @@
     <ClCompile Include="src\render.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\menu.h" />
     <ClInclude Include="include\overlay.h" />
     <ClInclude Include="include\render.h" />
     <ClInclude Include="lib\imgui\backends\imgui_impl_dx9.h" />
