@@ -1,13 +1,17 @@
 #pragma once
 
-#include <d3d9.h>
 #include <overlay.h>
+
+#include <d3d9.h>
+
+#include <imgui.h>
+#include <imgui_impl_dx9.h>
+#include <imgui_impl_win32.h>
 
 class Render
 {
 	private:
 		Overlay				  mOverlay		  = {};
-
 		LPDIRECT3D9			  mD3d9			  = nullptr;
 		LPDIRECT3DDEVICE9	  mDeviceD3d9	  = nullptr;
 		D3DPRESENT_PARAMETERS mParametersD3d9 = {};
@@ -20,11 +24,11 @@ class Render
 		)
 		{
 			mOverlay = Overlay(className, windowName, styles);
-
-			if (!CreateDevice()) return;
+			InitRendering();
 		}
 
 		bool CreateDevice();
-		bool InitD3D9();
+		void CleanDevice();
+		bool InitRendering();
 		void InitImGui();
 };

@@ -32,7 +32,7 @@ bool Render::CreateDevice()
 		&mDeviceD3d9
 	);
 		
-	if ( res != D3D_OK)
+	if (res != D3D_OK)
 	{
 		ERROR_MSG("Can't create d3d device");
 		return false;
@@ -41,11 +41,33 @@ bool Render::CreateDevice()
 	return true;
 }
 
-bool Render::InitD3D9()
+void Render::CleanDevice()
 {
-	return false;
+	if (mDeviceD3d9) { mDeviceD3d9->Release(); mDeviceD3d9 = nullptr; }
+	if (mD3d9) { mD3d9->Release(); mD3d9 = nullptr; }
+}
+
+bool Render::InitRendering()
+{
+	// Init d3d9
+	if (!CreateDevice())
+	{
+		ERROR_MSG("Can't init d3d9");
+		CleanDevice();
+		return false;
+	}
+	
+	// Init Imgui
+	InitImGui();
 }
 
 void Render::InitImGui()
 {
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	
+	ImGui::StyleColorsDark();
+
+	ImGui_ImplWin32_Init(mOverlay.mHandle);
+	ImGui_ImplDX9_Init(mDeviceD3d9);
 }
