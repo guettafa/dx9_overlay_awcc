@@ -1,18 +1,30 @@
 #pragma once
 
 #include <d3d9.h>
-#include <Windows.h>
+#include <overlay.h>
 
 class Render
 {
 	private:
-		LPDIRECT3D9			  mD3d9			= nullptr;
-		LPDIRECT3DDEVICE9	  mDeviceD3d9	= nullptr;
-		D3DPRESENT_PARAMETERS mParametersD3d9;
+		Overlay				  mOverlay		  = {};
+
+		LPDIRECT3D9			  mD3d9			  = nullptr;
+		LPDIRECT3DDEVICE9	  mDeviceD3d9	  = nullptr;
+		D3DPRESENT_PARAMETERS mParametersD3d9 = {};
 
 	public:
-		bool CreateDevice(HWND windowHandle);
-		void CreateSwapChain();
-		bool InitD3D9;
+		Render(
+			std::string_view className, 
+			std::string_view windowName, 
+			UINT64			 styles
+		)
+		{
+			mOverlay = Overlay(className, windowName, styles);
+
+			if (!CreateDevice()) return;
+		}
+
+		bool CreateDevice();
+		bool InitD3D9();
 		void InitImGui();
 };

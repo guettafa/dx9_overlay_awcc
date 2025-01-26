@@ -1,7 +1,5 @@
 #include "overlay.h"
 
-#define ERROR_MSG(message) std::cout << "ERROR - " << message << std::endl;
-
 bool Overlay::GetWndHandle(std::string_view className, std::string_view windowName)
 {
 	mHandle = FindWindowA(className.data(), windowName.data());
@@ -82,4 +80,3 @@ bool Overlay::ChangeWndPosition()
 
 	return true;
 }
-

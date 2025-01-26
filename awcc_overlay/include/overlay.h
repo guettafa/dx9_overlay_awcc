@@ -5,13 +5,15 @@
 #include <dwmapi.h>
 #include <string_view>
 
+#define ERROR_MSG(message) std::cout << "ERROR - " << message << std::endl;
+
 class Overlay
 {
-	private:
-		HWND mHandle;
-		UINT32  mDisplayDimension[2]; // Width & Height
-
 	public:
+		HWND	mHandle;
+		UINT32  mDisplayDimension[2]; // Width and Height
+
+		Overlay() {};
 		Overlay(
 			std::string_view className, 
 			std::string_view windowName,
