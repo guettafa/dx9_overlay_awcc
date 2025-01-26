@@ -1,6 +1,6 @@
 # Render on overlay that use d3d9.dll
 
-This program is a Proof of Concept (POC) that demonstrates how to render an overlay using DirectX 9 (dx9), similar to the Alienware Command Center Overlay (AWCC Overlay). It is intended for educational purposes only.
+This program is a Proof of Concept (POC) that demonstrates how to render on overlay using DirectX 9 (dx9), similar to the Alienware Command Center Overlay (AWCC Overlay). It is intended for educational purposes only.
 
 PS - The AWCCOverlay use HwndWrapper Class and dynamically generate the Class Name. 
 
