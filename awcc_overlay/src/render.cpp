@@ -70,7 +70,6 @@ bool Render::InitRendering()
 	// Init d3d9
 	if (!CreateDevice())
 	{
-		LOG("Can't init d3d9");
 		CleanDevice();
 		return false;
 	}
