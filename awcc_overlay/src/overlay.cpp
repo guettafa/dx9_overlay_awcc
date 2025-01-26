@@ -82,3 +82,4 @@ bool Overlay::ChangeWndPosition()
 
 	return true;
 }
+
