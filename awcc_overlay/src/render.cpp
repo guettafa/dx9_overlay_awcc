@@ -87,7 +87,7 @@ void Render::Loop(const std::function<void()>& func)
 	MSG msg{};
 
 	// ImGui Default bg Color
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+	ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);
 
 	while (!over)
 	{
@@ -124,6 +124,7 @@ void Render::Loop(const std::function<void()>& func)
 		mDeviceD3d9->SetRenderState(D3DRS_ALPHABLENDENABLE,  FALSE);
 		mDeviceD3d9->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
 
+		
 		D3DCOLOR clear_col_dx = D3DCOLOR_RGBA((int)(clear_color.x * clear_color.w * 255.0f), (int)(clear_color.y * clear_color.w * 255.0f), (int)(clear_color.z * clear_color.w * 255.0f), (int)(clear_color.w * 255.0f));
 		mDeviceD3d9->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, clear_col_dx, 1.0f, 0);
 		if (mDeviceD3d9->BeginScene() >= 0)

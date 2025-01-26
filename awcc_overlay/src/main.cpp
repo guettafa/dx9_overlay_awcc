@@ -4,7 +4,7 @@
 int main()
 {
 	Render awccOverlay(
-		"HwndWrapper[AWCCOverlay;;a6ca78f7-8648-45d9-95cc-b5b75da0044d]", // class name that correspond to disposable Handle from WPF ( AKA, a problem ) 
+		"HwndWrapper[AWCCOverlay;;bf9c092f-66f9-4a17-b0ea-934dec865872]", // class name that correspond to disposable Handle from WPF ( AKA, a problem ) 
 		"AWCC Overlay",
 		WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TOPMOST | WS_EX_TRANSPARENT
 	);
