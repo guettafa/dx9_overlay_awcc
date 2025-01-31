@@ -6,3 +6,6 @@ PS - The AWCCOverlay use HwndWrapper Class and dynamically generate the Class Na
 
 ![imgui](https://github.com/user-attachments/assets/6d538a90-5f8a-4f30-8c47-64abf1f413d5)
 ![window_styles](https://github.com/user-attachments/assets/bee6d15d-fe89-48fe-916a-bfe9426af4c3)
+## vsync off
+![gold](https://github.com/user-attachments/assets/45bddad6-7c21-4c40-a4a8-f0ae36d07d56)
+
